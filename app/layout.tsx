@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Figtree } from "next/font/google";
 import "./globals.css";
 import Nav from "@/app/components/Nav";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const figtree = Figtree ({
+    subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: "Armin Eslamieh",
@@ -26,11 +20,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${figtree.className} antialiased`}
     >
       <body className="min-h-full flex flex-col">
       <Nav />
-      {children}</body>
+      {children}
+      </body>
     </html>
   );
 }
