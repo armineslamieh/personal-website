@@ -1,7 +1,9 @@
 import Image from "next/image";
+import FadeIn from "@/app/components/FadeIn";
 
 export default function Home() {
   return (
+      <FadeIn>
       <div>
           <Image src="/armin.jpg" alt="Armin Eslamieh" fill className="object-cover object-[center_14%] scale-100" priority />
           <h2 className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 text-white text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-center
@@ -21,5 +23,6 @@ export default function Home() {
             </p>
           </div>
       </div>
+      </FadeIn>
   );
 }

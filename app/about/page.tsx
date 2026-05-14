@@ -1,6 +1,11 @@
+import ThoughtsIntro from "@/app/components/ThoughtsIntro";
+
 const page = () => {
   return (
-    <div>About Me</div>
+      <>
+          <div></div>
+      </>
+
   )
 }
 

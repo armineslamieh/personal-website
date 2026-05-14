@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import Nav from "@/app/components/Nav";
+import FadeIn from "@/app/components/FadeIn";
 
 const figtree = Figtree ({
     subsets: ["latin"]
@@ -22,6 +23,7 @@ export default function RootLayout({
       lang="en"
       className={`${figtree.className} antialiased`}
     >
+
       <body className="min-h-full flex flex-col">
       <Nav />
       {children}
