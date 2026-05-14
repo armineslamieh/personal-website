@@ -22,3 +22,7 @@ body {
   color: var(--foreground);
   font-family: inherit;
 }
+
+html, body {
+    scroll-behavior: smooth;
+}
