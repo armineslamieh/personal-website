@@ -31,7 +31,7 @@ export default function ThoughtCard({
                     {/* Floating label */}
                     <div className="absolute top-4 left-4 flex flex-row gap-2 ">
                     {thought.tags.map((tag) => (
-                    <div className="top-4 left-4 px-3 py-1 rounded-full
+                    <div key={tag} className="top-4 left-4 px-3 py-1 rounded-full
                     bg-black/40 backdrop-blur-md text-white text-xs tracking-widest">
                         {tag.toUpperCase()}
                     </div>
