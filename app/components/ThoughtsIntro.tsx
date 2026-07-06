@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function ThoughtsIntro() {
     return (
-        <section className="relative h-screen flex items-center overflow-hidden">
+        <section className="relative h-screen flex items-center overflow-hidden min-h-screen">
             <motion.div
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
