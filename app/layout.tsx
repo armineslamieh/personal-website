@@ -3,6 +3,7 @@ import { Figtree } from "next/font/google";
 import "./globals.css";
 import Nav from "@/app/components/Nav";
 import FadeIn from "@/app/components/FadeIn";
+import TimeTracker from "@/app/components/TimeTracker";
 
 const figtree = Figtree ({
     subsets: ["latin"]
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
       <Nav />
       {children}
+      <TimeTracker/>
       </body>
     </html>
   );

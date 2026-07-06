@@ -12,7 +12,7 @@ import { HiOutlineChevronDoubleDown } from 'react-icons/hi2'
 const AboutMeCard = () => {
 
     const socialLinks = [
-        {Icon: FaLinkedin, href: 'https://www.linkedin.com/in/armin-eslamieh-42222022b/', label: 'LinkedIn'},
+        {Icon: FaLinkedin, href: 'https://www.linkedin.com/in/armin-eslamieh', label: 'LinkedIn'},
         {Icon: FaGithub, href: 'https://github.com/ArminEslamieh', label: 'GitHub'},
         {Icon: FaMediumM, href: 'https://medium.com/@armin.eslamieh', label: 'Medium'},
         {Icon: SiX, href: 'https://x.com/ArminEslamieh', label: 'X'},
