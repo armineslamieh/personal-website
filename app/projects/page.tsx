@@ -1,7 +1,9 @@
-const page = () => {
-  return (
-    <div>Projects</div>
-  )
-}
+import { prisma } from "@/lib/prisma";
+import ProjectsClient from "./ProjectsClient";
 
-export default page
+const ProjectsPage = async () => {
+    const projects = await prisma.project.findMany();
+    return <ProjectsClient projects={projects} />;
+};
+
+export default ProjectsPage;
