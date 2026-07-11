@@ -73,7 +73,7 @@ const AboutMeCard = () => {
                         </div>
                         </motion.div>
 
-                        <a href="#projects"
+                        <a href="/projects"
                            className="fixed bottom-8 right-8 flex flex-col items-center gap-2 text-white/60 hover:text-orange-400 transition-colors group"
                         >
                             <span className="text-sm tracking-wider uppercase">Projects</span>
