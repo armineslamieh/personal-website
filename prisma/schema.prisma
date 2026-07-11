@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
@@ -31,6 +26,25 @@ model Comment {
   createdAt DateTime @default(now())
   thought   Thought  @relation(fields: [thoughtId], references: [id], onDelete: Cascade)
   thoughtId Int
+}
+
+model Project {
+  id               Int         @id @default(autoincrement())
+  slug             String      @unique
+  title            String
+  role             String?
+  year             Int?
+  shortDescription String
+  description      String
+  coverImage       String
+  techStack        String[]
+  type             ProjectType
+  links            String[]
+}
+
+enum ProjectType {
+  ART
+  ENGINEERING
 }
 
 enum Tags {
