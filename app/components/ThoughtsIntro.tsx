@@ -122,6 +122,7 @@ export default function ThoughtsIntro() {
                 className="
                     relative hidden h-screen min-h-screen
                     items-center overflow-hidden md:flex
+                    bg-[#0A0505]
                 "
             >
                 <motion.div
