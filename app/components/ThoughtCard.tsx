@@ -1,5 +1,15 @@
 import Link from "next/link";
-import type { Thought } from "@prisma/client";
+
+type Thought = {
+    id: number;
+    title: string;
+    body: string;
+    coverImage: string | null;
+    tags: string[];
+    readMinutes: number;
+    createdAt: Date;
+    updatedAt: Date;
+};
 
 export default function ThoughtCard({ thought }: { thought: Thought }) {
     return (
