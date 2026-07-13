@@ -52,7 +52,7 @@ export default function Astronaut() {
                         enableZoom={false}
                         enablePan={false}
                         autoRotate
-                        autoRotateSpeed={1.5}
+                        autoRotateSpeed={1}
                     />
                 </Suspense>
             </Canvas>

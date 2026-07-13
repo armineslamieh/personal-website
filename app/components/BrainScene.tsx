@@ -7,12 +7,18 @@ import * as THREE from "three";
 
 // 🔧 Position map — key = project.slug from the database
 const NODE_POSITIONS: Record<string, [number, number, number]> = {
-    "personal-website": [-3, 16, -1],
     "sunday-mornings": [-5, 20, 3],
     "photography": [-2, 20, -10],
     "test-project": [5, 13, -10],
     "api-platform": [6, 20, 1],
     "ml-pipeline": [4, 20, -5],
+
+    "iran-archive": [4, 20, -5],
+    "restaurant-reservation-system": [6, 18, 1],
+    "music-discovery-web-app": [5, 15, -8],
+    "personal-website": [3, 22, -2],
+    "nss-thermometer-devops": [7, 19, -4],
+    "witteveen-bos-portfolio-platform": [5, 16, 3],
 };
 
 type Project = {
@@ -138,7 +144,6 @@ function ProjectPanel({ project, screenX, screenY, canvasWidth, isMobile, onOpen
     const panelWidth = isMobile ? canvasWidth - 32 : 300;
     const panelLeft = isMobile ? 16 : (isEngineering ? canvasWidth - panelWidth - 32 : 32);
 
-    // Mobile: compact height, sits above the legend/mute area
     const mobilePanelHeight = 180;
     const panelTop = isMobile
         ? window.innerHeight - mobilePanelHeight - 80
@@ -205,7 +210,6 @@ function ProjectPanel({ project, screenX, screenY, canvasWidth, isMobile, onOpen
                     transition: "opacity 0.4s ease, transform 0.4s ease",
                 }}
             >
-                {/* Cover image — DESKTOP ONLY */}
                 {!isMobile && (project as any).coverImage && (
                     <div style={{
                         width: "100%",
@@ -267,7 +271,6 @@ function ProjectPanel({ project, screenX, screenY, canvasWidth, isMobile, onOpen
                         {project.shortDescription}
                     </p>
 
-                    {/* Tech pills — DESKTOP ONLY */}
                     {!isMobile && project.techStack.length > 0 && (
                         <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", marginBottom: "14px" }}>
                             {project.techStack.slice(0, 4).map(t => (
@@ -317,7 +320,7 @@ function ProjectPanel({ project, screenX, screenY, canvasWidth, isMobile, onOpen
     );
 }
 
-export default function BrainScene({ projects }: { projects: Project[] }) {
+export default function BrainScene({ projects, isPaused = false }: { projects: Project[]; isPaused?: boolean }) {
     const router = useRouter();
     const [activeInfo, setActiveInfo] = useState<ActiveInfo>(null);
     const [canvasWidth, setCanvasWidth] = useState(0);
@@ -341,6 +344,13 @@ export default function BrainScene({ projects }: { projects: Project[] }) {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    // Close panel when scene is paused (user navigated away)
+    useEffect(() => {
+        if (isPaused) {
+            setActiveInfo(null);
+        }
+    }, [isPaused]);
+
     const handleNodeClick = useCallback((project: NodeProject, screenX: number, screenY: number) => {
         setActiveInfo({ project, screenX, screenY });
     }, []);
@@ -363,22 +373,46 @@ export default function BrainScene({ projects }: { projects: Project[] }) {
             opacity: loaded ? 1 : 0,
             transition: "opacity 1.2s ease",
         }}>
-            <Canvas camera={{ position: [0, 0, isMobile ? 140 : 100], fov: 60 }}>
+            <Canvas
+                camera={{
+                    position: [0, 0, isMobile ? 140 : 100],
+                    fov: 60,
+                }}
+                gl={{
+                    alpha: false,
+                    antialias: true,
+                }}
+                style={{
+                    background: "#0b0505",
+                }}
+                onCreated={({ gl, scene }) => {
+                    gl.setClearColor("#0b0505", 1);
+                    scene.background = new THREE.Color("#0b0505");
+                }}
+            >
+                <color attach="background" args={["#0b0505"]} />
+
                 <Suspense fallback={null}>
                     <ambientLight intensity={1} />
                     <directionalLight position={[5, 5, 5]} intensity={1.5} />
-                    <pointLight position={[-5, -5, -5]} intensity={0.5} color="#ff4400" />
+                    <pointLight
+                        position={[-5, -5, -5]}
+                        intensity={0.5}
+                        color="#ff4400"
+                    />
+
                     <Brain
                         projects={nodeProjects}
                         activeProject={activeInfo?.project.id ?? null}
                         onNodeClick={handleNodeClick}
                         onLoaded={() => setTimeout(() => setLoaded(true), 100)}
                     />
+
                     <OrbitControls
                         enableZoom={true}
                         zoomSpeed={0.2}
-                        autoRotate={activeInfo === null}
-                        autoRotateSpeed={0.2}
+                        autoRotate={activeInfo === null && !isPaused}
+                        autoRotateSpeed={1}
                     />
                 </Suspense>
             </Canvas>
@@ -395,25 +429,6 @@ export default function BrainScene({ projects }: { projects: Project[] }) {
                 />
             )}
 
-            {/* Legend — smaller on mobile */}
-            <div style={{
-                position: "absolute",
-                bottom: isMobile ? "16px" : "32px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                display: "flex",
-                gap: isMobile ? "16px" : "24px",
-                fontFamily: "sans-serif",
-            }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: isMobile ? "8px" : "10px", height: isMobile ? "8px" : "10px", borderRadius: "50%", background: "#9F7AEA" }} />
-                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: isMobile ? "10px" : "12px", letterSpacing: "0.1em" }}>ART</span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    <div style={{ width: isMobile ? "8px" : "10px", height: isMobile ? "8px" : "10px", borderRadius: "50%", background: "#378ADD" }} />
-                    <span style={{ color: "rgba(255,255,255,0.6)", fontSize: isMobile ? "10px" : "12px", letterSpacing: "0.1em" }}>ENGINEERING</span>
-                </div>
-            </div>
         </div>
     );
 }

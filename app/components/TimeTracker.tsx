@@ -12,7 +12,7 @@ const StatusFooter = () => {
     }, [])
 
     return (
-        <div className="fixed bottom-4 right-4 text-right text-white/40 text-[9px] uppercase tracking-[0.25em] font-light leading-relaxed">
+        <div className="fixed bottom-4 right-4 pb-safe text-right text-white/40 text-[9px] uppercase tracking-[0.25em] font-light leading-relaxed">
             <p>Amsterdam, NL</p>
             <p>
                 {time

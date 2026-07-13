@@ -7,7 +7,6 @@ import Astronaut from './Astronaut'
 const links = [
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
-    { href: '/dpb', label: 'DPB' },
     { href: '/projects', label: 'Projects' },
     { href: '/thoughts', label: 'Thoughts' },
 ]
@@ -31,7 +30,7 @@ export default function Nav() {
 
                 {/* Desktop links */}
                 <div className="hidden md:flex gap-20 lg:gap-30">
-                    {links.slice(0, 4).map((l) => (
+                    {links.slice(0, 3).map((l) => (
                         <Link
                             href={l.href}
                             key={l.href}
@@ -76,7 +75,7 @@ export default function Nav() {
             {/* Backdrop */}
             <div
                 onClick={() => setIsOpen(false)}
-                className={`md:hidden fixed inset-0 bg-black/60 backdrop-blur-md z-30 transition-opacity duration-500 ${
+                className={`md:hidden fixed inset-0  backdrop-blur-md z-30 transition-opacity duration-500 ${
                     isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
             />
@@ -88,11 +87,11 @@ export default function Nav() {
                 }`}
             >
                 {/* Base dark background */}
-                <div className="absolute inset-0 bg-zinc-950" />
+                <div className="absolute inset-0 " />
 
                 {/* 3D scene layer */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-30 pointer-events-none">
-                    <div className="w-2/3 h-2/3">
+                <div className="absolute inset-0 flex items-center justify-center opacity-50 pointer-events-none">
+                    <div className="w-1/2 h-1/2">
                         <Astronaut />
                     </div>
                 </div>
@@ -105,8 +104,13 @@ export default function Nav() {
 
                 {/* Menu content */}
                 <div className="relative h-full flex flex-col p-8 pt-24">
+
+
+
                     {/* Staggered links */}
                     <div className="flex flex-col gap-1">
+                        <h1 className="text-white text-3xl font-bold mb-1">Armin Eslamieh</h1>
+                        <span className="h-0.5  bg-orange-400 mb-1"></span>
                         {links.map((l, i) => (
                             <Link
                                 key={l.href}

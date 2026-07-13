@@ -96,7 +96,7 @@ const ProjectDetailPage = async ({ params }: Params) => {
                         ) : null}
                     </div>
 
-                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl">
                         <Image src={project.coverImage} alt={project.title} fill className="object-cover" sizes="(min-width: 1024px) 50vw, 100vw" priority />
                     </div>
                 </div>
