@@ -50,15 +50,15 @@ export default function Home() {
                     </div>
 
                     {/* Scroll to explore cue — both mobile and desktop */}
-                    <div className="absolute bottom-32 md:bottom-16 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/60">
+                    <a href="#about-section" className="absolute bottom-32 md:bottom-16 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors cursor-pointer">
                         <span className="text-[10px] uppercase tracking-[0.3em]">Scroll to explore</span>
                         <HiOutlineChevronDoubleDown className="w-4 h-4 animate-bounce" />
-                    </div>
+                    </a>
 
                 </div>
             </FadeIn>
 
-            <section >
+            <section id="about-section">
                 <About />
             </section>
         </>

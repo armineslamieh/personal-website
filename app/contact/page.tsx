@@ -3,17 +3,15 @@
 import FadeIn from "@/app/components/FadeIn";
 import { FaLinkedin, FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
-import {HiOutlineChevronDoubleDown} from "react-icons/hi2";
+import { HiOutlineChevronDoubleDown } from "react-icons/hi2";
 
-
-const EMAIL = "eslamieh.armin@gmail.com";
-const LINKEDIN = "https://www.linkedin.com/in/armin-eslamieh/";
-const WHATSAPP = "https://wa.me/31614367654";
-const TELEGRAM = "https://t.me/LetsAskBot?start=Ib2GjE";
+const EMAIL = "armin.eslamieh@gmail.com";
 const EMAIL_SUBJECT = "Hey Armin,";
+const LINKEDIN = "https://linkedin.com/in/armineslamieh";
+const WHATSAPP = "https://wa.me/31687796607";
+const TELEGRAM = "https://t.me/LetsAskBot?start=Ib2GjE";
 
 export default function ContactPage() {
-
 
     return (
         <main className="relative min-h-screen">
@@ -31,12 +29,9 @@ export default function ContactPage() {
                         <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-tight mb-6">Let&apos;s talk.</h1>
                         <p className="text-white/70 text-base md:text-lg leading-relaxed max-w-xl">There&apos;s no one right way to reach me. Some people come with a job offer, some with a question, some with a story they need to tell someone. All of it is welcome.</p>
                         <p className="text-white/60 text-sm md:text-base leading-relaxed max-w-xl mt-4">Pick whatever feels right.</p>
-                        <div className="flex items-center gap-3 mt-3 text-white/50">
-                            <span className="text-xs uppercase tracking-[0.3em]">Keep scrolling — there&apos;s one more</span>
-                            <HiOutlineChevronDoubleDown className="w-4 h-4 animate-bounce" />
-                        </div>
-                    </div>
+                        <a href="#telegram-section" className="flex items-center gap-3 mt-8 text-white/50 hover:text-white transition-colors cursor-pointer w-fit"><span className="text-xs uppercase tracking-[0.3em]">Keep scrolling — there&apos;s one more</span><HiOutlineChevronDoubleDown className="w-4 h-4 animate-bounce" /></a>
 
+                    </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-24">
 
@@ -49,6 +44,7 @@ export default function ContactPage() {
                             <p className="text-white/60 text-sm leading-relaxed">For work, questions, or anything you want written down.</p>
                             <div className="mt-2 text-white/40 text-xs uppercase tracking-widest group-hover:text-orange-400 transition-colors">Open mail app ↗</div>
                         </a>
+
 
                         <a href={LINKEDIN} target="_blank" rel="noopener noreferrer" className="group relative flex flex-col items-start gap-3 p-6 rounded-2xl border border-blue-400/30 bg-black/40 hover:bg-black/60 hover:border-blue-400/60 transition-all duration-300 overflow-hidden" style={{ boxShadow: "0 0 30px rgba(59,130,246,0.1)" }}>
                             <div className="flex items-center gap-3">
@@ -71,7 +67,7 @@ export default function ContactPage() {
                         </a>
                     </div>
 
-                    <div className="relative">
+                    <div id="telegram-section" className="relative scroll-mt-24">
                         <div className="flex flex-col md:flex-row items-center md:justify-between gap-8 md:gap-12">
 
                             <div className="flex-1 max-w-xl">
@@ -84,7 +80,7 @@ export default function ContactPage() {
 
                                 <div className="flex flex-col gap-4 text-white/70 text-base leading-relaxed">
                                     <p>I believe people should talk. About everything. The clean things and the messy things. The questions you&apos;d never ask out loud.</p>
-                                    <p>If there&apos;s something you need to say to someone, <em className="text-white/90">Talk to me.</em></p>
+                                    <p>If there&apos;s something you need to say to someone — but not to <em className="text-white/90">someone in your life</em> — this channel exists.</p>
                                     <p className="text-white/60 text-sm">No names. No expectations. Just words. I read everything. I answer when I can.</p>
                                 </div>
                             </div>
