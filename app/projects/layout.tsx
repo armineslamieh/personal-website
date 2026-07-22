@@ -1,4 +1,5 @@
 "use client";
+import { span } from "framer-motion/client";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -139,14 +140,14 @@ export default function ProjectsLayout({ children }: { children: React.ReactNode
 
             {/* Section title — mobile shows legends underneath, desktop only shows title */}
             {ready && !showIntro && isBrainPage && (
-                <div className="fixed top-24 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0 z-10 flex flex-col items-center md:items-start gap-3 pointer-events-none">
+                <div className="fixed top-24 left-0 right-0 md:left-16 md:right-auto z-10 flex flex-col items-center md:items-start gap-3 pointer-events-none">
                     <div className="flex flex-col items-center md:items-start gap-1">
-                        <span className="text-white/40 uppercase tracking-[0.4em] text-[9px] md:text-[10px] font-light">
-                            Section
-                        </span>
+          <span className="text-white/40 uppercase tracking-[0.4em] text-[9px] md:text-[10px] font-light">
+              Section
+          </span>
                         <span className="text-white/80 uppercase tracking-[0.3em] text-xs md:text-sm font-semibold">
-                            Projects
-                        </span>
+              Projects
+          </span>
                     </div>
                     {/* Legend on mobile only */}
                     <div className="flex md:hidden items-center gap-4 mt-1">
@@ -158,6 +159,11 @@ export default function ProjectsLayout({ children }: { children: React.ReactNode
                             <div className="w-1.5 h-1.5 rounded-full bg-[#378ADD]" />
                             <span className="text-white/60 uppercase tracking-widest text-[9px]">Engineering</span>
                         </div>
+                    </div>
+                    {/* Rotate / zoom guide — mobile only, one line under the legend */}
+                    <div className="flex md:hidden items-center gap-4 whitespace-nowrap text-white/50 uppercase tracking-[0.2em] text-[9px] font-light">
+                        <span className="flex items-center gap-1.5"><span className="text-sm">↻</span> Drag to rotate</span>
+                        <span className="flex items-center gap-1.5"><span className="text-sm">⊕</span> Pinch to zoom</span>
                     </div>
                 </div>
             )}
@@ -185,6 +191,20 @@ export default function ProjectsLayout({ children }: { children: React.ReactNode
                     <span className={`w-1 h-1 md:w-1.5 md:h-1.5 rounded-full transition-colors ${muted ? "bg-white/30" : "bg-orange-400"}`} />
                     {muted ? "Sound off" : "Sound on"}
                 </button>
+            )}
+
+            {/* Rotate / zoom guide — desktop: fixed top-right. Mobile: under the legend. */}
+            {ready && !showIntro && isBrainPage && (
+                <div className="hidden md:flex fixed top-24 right-5 md:right-8 z-10 flex-col items-end gap-1.5 pointer-events-none text-white/50 uppercase tracking-[0.2em] text-[9px] font-light">
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-sm">↻</span>
+                        <span>Drag to rotate</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-sm">⊕</span>
+                        <span>Scroll to zoom</span>
+                    </div>
+                </div>
             )}
 
             {!isBrainPage && children}

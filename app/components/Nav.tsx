@@ -46,10 +46,7 @@ const Nav = () => {
             {/* Top nav bar */}
             <nav className={`absolute top-2 md:top-2 left-0 right-0 z-20 flex justify-between items-center px-6 py-4 md:mx-10 ${isOpen ? "pointer-events-none" : ""}`}>
                 <Link href="/" className="flex items-center gap-2 pointer-events-auto">
-                    <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black flex items-center justify-center border border-white/20">
-                        <span className="text-white text-[10px] md:text-xs font-bold">N</span>
-                    </div>
-                    <span className="hidden md:block text-lg font-semibold text-white">Armin Eslamieh</span>
+                    <span className=" text-2xl font-bold text-white">Armin Eslamieh</span>
                 </Link>
 
                 {/* Desktop links */}

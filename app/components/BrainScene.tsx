@@ -7,12 +7,12 @@ import * as THREE from "three";
 
 // 🔧 Position map — key = project.slug from the database
 const NODE_POSITIONS: Record<string, [number, number, number]> = {
-    "iran-archive": [4, 20, -5],
-    "restaurant-reservation-system": [6, 18, 1],
-    "music-discovery-web-app": [5, 15, -8],
-    "personal-website": [3, 22, -2],
-    "nss-thermometer-devops": [7, 19, -4],
-    "witteveen-bos-portfolio-platform": [5, 16, 3],
+    "iran-archive": [4, 22, -2],
+    "restaurant-reservation-system": [8, 19, 2],
+    "music-discovery-web-app": [9, 15, -4],
+    "personal-website": [3, 13, 4],
+    "nss-thermometer-devops": [7, 11, -2],
+    "witteveen-bos-portfolio-platform": [5, 17, 5],
 };
 
 type Project = {
@@ -39,9 +39,10 @@ type ActiveInfo = {
 const MOBILE_PANEL_HEIGHT = 180;
 const DESKTOP_PANEL_HEIGHT = 380;
 
-function AtomNode({ project, isActive, onClick }: {
+function AtomNode({ project, isActive, isMobile, onClick }: {
     project: NodeProject;
     isActive: boolean;
+    isMobile: boolean;
     onClick: (screenX: number, screenY: number) => void;
 }) {
     const { camera, size } = useThree();
@@ -76,77 +77,55 @@ function AtomNode({ project, isActive, onClick }: {
         }
     });
 
-    const orbitRadius = isActive ? 2.0 : 1.5;
-    const ringThickness = isActive ? 0.05 : 0.03;
+    // Node orb sizing. The wireframe cage grows slightly when active; the inner
+    // core stays small so it reads as a glowing nucleus.
+    const orbRadius = (isActive ? 1.5 : 1.25) * (isMobile ? 1.15 : 1);
+
+
+    // Invisible, finger-sized tap target. Much larger than the visible core so
+    // taps on mobile land reliably. Kept transparent (not `visible={false}`) so
+    // it still receives pointer events.
+    const hitRadius = isMobile ? 2.4 : 1.3;
 
     return (
         <group position={project.position}>
             {/* Soft outer glow */}
             <mesh>
                 <sphereGeometry args={[isActive ? 2.8 : 2.0, 16, 16]} />
-                <meshBasicMaterial color={color} transparent opacity={0.08} />
+                <meshBasicMaterial color={color} transparent opacity={0.08} depthWrite={false} />
             </mesh>
 
-            {/* Group of 8 orbital rings that rotates together */}
+            {/* Rotating wireframe orb — matches the brain's wireframe language */}
             <group ref={orbitGroupRef}>
-                {/* Ring 1 — flat XZ plane */}
-                <mesh rotation={[Math.PI / 2, 0, 0]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.85 : 0.6} />
-                </mesh>
-                {/* Ring 2 — XY plane */}
-                <mesh rotation={[0, 0, 0]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.85 : 0.6} />
-                </mesh>
-                {/* Ring 3 — YZ plane */}
-                <mesh rotation={[0, Math.PI / 2, 0]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.85 : 0.6} />
-                </mesh>
-                {/* Ring 4 — 45° tilt */}
-                <mesh rotation={[Math.PI / 4, 0, Math.PI / 4]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.7 : 0.45} />
-                </mesh>
-                {/* Ring 5 — negative 45° tilt */}
-                <mesh rotation={[-Math.PI / 4, 0, Math.PI / 4]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.7 : 0.45} />
-                </mesh>
-                {/* Ring 6 — 60° Y and Z */}
-                <mesh rotation={[Math.PI / 3, Math.PI / 3, 0]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.6 : 0.4} />
-                </mesh>
-                {/* Ring 7 — offset diagonals */}
-                <mesh rotation={[Math.PI / 6, Math.PI / 4, Math.PI / 6]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.6 : 0.4} />
-                </mesh>
-                {/* Ring 8 — steep tilt */}
-                <mesh rotation={[Math.PI / 2.5, Math.PI / 5, Math.PI / 3]}>
-                    <torusGeometry args={[orbitRadius, ringThickness, 8, 64]} />
-                    <meshBasicMaterial color={color} transparent opacity={isActive ? 0.55 : 0.35} />
+                <mesh>
+                    <icosahedronGeometry args={[orbRadius, 1]} />
+                    <meshBasicMaterial color={color} wireframe />
                 </mesh>
             </group>
 
-            {/* Clickable pulsing core */}
+            {/* Enlarged invisible hit target — makes nodes easy to tap on mobile */}
+            <mesh onClick={handleClick}>
+                <sphereGeometry args={[hitRadius, 12, 12]} />
+                <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+            </mesh>
+
+            {/* Solid glowing nucleus inside the cage */}
             <mesh ref={coreRef} onClick={handleClick}>
                 <sphereGeometry args={[0.55, 20, 20]} />
                 <meshStandardMaterial
                     color={isActive ? "#ffffff" : color}
                     emissive={color}
-                    emissiveIntensity={isActive ? 2.5 : 1.5}
+                    emissiveIntensity={isActive ? 3 : 2.2}
                 />
             </mesh>
         </group>
     );
 }
 
-function Brain({ projects, activeProject, onNodeClick, onLoaded }: {
+function Brain({ projects, activeProject, isMobile, onNodeClick, onLoaded }: {
     projects: NodeProject[];
     activeProject: number | null;
+    isMobile: boolean;
     onNodeClick: (project: NodeProject, screenX: number, screenY: number) => void;
     onLoaded: () => void;
 }) {
@@ -175,6 +154,7 @@ function Brain({ projects, activeProject, onNodeClick, onLoaded }: {
                     key={p.id}
                     project={p}
                     isActive={activeProject === p.id}
+                    isMobile={isMobile}
                     onClick={(x, y) => onNodeClick(p, x, y)}
                 />
             ))}
@@ -484,6 +464,7 @@ export default function BrainScene({ projects, isPaused = false }: { projects: P
             opacity: loaded ? 1 : 0, transition: "opacity 1.2s ease",
         }}>
             <Canvas camera={{ position: [0, 0, isMobile ? 140 : 100], fov: 60 }}>
+                <color attach="background" args={["#121212"]} />
                 <Suspense fallback={null}>
                     <ambientLight intensity={1} />
                     <directionalLight position={[5, 5, 5]} intensity={1.5} />
@@ -491,6 +472,7 @@ export default function BrainScene({ projects, isPaused = false }: { projects: P
                     <Brain
                         projects={nodeProjects}
                         activeProject={activeInfo?.project.id ?? null}
+                        isMobile={isMobile}
                         onNodeClick={handleNodeClick}
                         onLoaded={() => setTimeout(() => setLoaded(true), 100)}
                     />
@@ -504,7 +486,7 @@ export default function BrainScene({ projects, isPaused = false }: { projects: P
                         enableZoom={true}
                         zoomSpeed={0.2}
                         autoRotate={activeInfo === null && !isPaused}
-                        autoRotateSpeed={0.2}
+                        autoRotateSpeed={0.5}
                     />
                 </Suspense>
             </Canvas>
